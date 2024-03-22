@@ -160,3 +160,13 @@ body {
     background-color: #218838; /* Color de fondo del botón al pasar el cursor */
     border-color: #1e7e34; /* Color del borde al pasar el cursor */
 }
+
+
+
+    #plazo_meses_range_label {
+        font-size: 16px;
+        font-weight: bold;
+        color: blue; /* Cambia el color según tu preferencia */
+        margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+    }
+

@@ -124,12 +124,24 @@ function mostrar_calculadora_financiera()
                             <form method="post" action="<?php echo htmlspecialchars($_SERVER["REQUEST_URI"]); ?>">
                                 <div class="mb-3">
                                     <label for="monto_prestamo" class="form-label">Monto del crédito:</label>
-                                    <input type="number" name="monto_prestamo" class="form-control" value="<?php echo $monto_prestamo; ?>" required>
+                                    <input type="number" name="monto_prestamo" class="form-control" placeholder="Q.00" value="<?php echo $monto_prestamo; ?>" required>
                                 </div>
+
+                                <!--modo Manual & modo Slicer-->
                                 <div class="mb-3">
                                     <label for="plazo_meses" class="form-label">Plazo en meses:</label>
-                                    <input type="number" name="plazo_meses" class="form-control" value="<?php echo $plazo_meses; ?>" required>
+                                    <input type="number" name="plazo_meses" id="plazo_meses_input" class="form-control" min="1" max="36" value="<?php echo $plazo_meses; ?>" required>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="plazo_meses_range" id="plazo_meses_range_label" class="form-label">Plazo en meses: <?php echo $plazo_meses; ?></label>
+                                    <input type="range" name="plazo_meses_range" id="plazo_meses_range" class="form-range" min="1" max="36" value="<?php echo $plazo_meses; ?>">
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" id="modo_manual_checkbox">
+                                    <label class="form-check-label" for="modo_manual_checkbox">Modo Manual</label>
+                                </div>
+                                <!--final modo Manual & modo Slicer-->
+
                                 <div class="mb-3">
                                     <label for="tipo_credito" class="form-label">Tipo de crédito:</label>
                                     <select name="tipo_credito" class="form-select" required>
@@ -153,6 +165,7 @@ function mostrar_calculadora_financiera()
                             <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && $error_message == '') : ?>
                                 <h2>Resumen de Pagos:</h2>
                                 <?php if ($tipo_cuota == 'nivelada') : ?>
+                                    <div class="alert alert-info" role="alert">La cuota nivelada será siempre la misma.</div>
                                     <p>Cuota Nivelada:</p>
                                     <p>a) Cuota a Pagar: Q<?php echo round($cuota, 2); ?></p>
                                     <p>b) Intereses Totales: Q<?php echo round(($cuota * $plazo_meses) - $monto_prestamo, 2); ?></p>
@@ -243,6 +256,7 @@ function mostrar_calculadora_financiera()
                     </div>
                 </div>
             </div>
+
             <script src="assets/funciones.js"></script>
             <!-- Enlace al archivo JavaScript de Bootstrap (opcional, solo si necesitas funcionalidades JS de Bootstrap) -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -252,6 +266,51 @@ function mostrar_calculadora_financiera()
                     document.getElementById('card-tabla').style.display = 'block';
                 });
             </script>
+
+            <script>
+                // Obtener elementos del DOM
+                const plazoMesesInput = document.getElementById('plazo_meses_input');
+                const plazoMesesRange = document.getElementById('plazo_meses_range');
+                const plazoMesesRangeLabel = document.getElementById('plazo_meses_range_label');
+
+                // Evento para sincronizar el valor del campo de entrada con el slider al cambiar el valor del slider
+                plazoMesesRange.addEventListener('input', function() {
+                    // Actualizar el valor del campo de entrada con el valor del slider
+                    plazoMesesInput.value = this.value;
+                    // Actualizar el texto del label con el valor del slider
+                    plazoMesesRangeLabel.textContent = 'Plazo en meses: ' + this.value;
+                });
+            </script>
+
+
+
+            <script>
+                // Función para cambiar la visibilidad del control de rango y el campo de entrada de tipo número
+                function toggleModoManual() {
+                    var modoManualCheckbox = document.getElementById('modo_manual_checkbox');
+                    var plazoMesesInput = document.getElementsByName('plazo_meses')[0];
+                    var plazoMesesRange = document.getElementsByName('plazo_meses_range')[0];
+
+                    // Si el checkbox de modo manual está seleccionado, ocultar el control de rango y mostrar el campo de entrada
+                    if (modoManualCheckbox.checked) {
+                        plazoMesesRange.style.display = 'none';
+                        plazoMesesInput.style.display = 'block';
+                    } else {
+                        // Si no está seleccionado, mostrar el control de rango y ocultar el campo de entrada
+                        plazoMesesRange.style.display = 'block';
+                        plazoMesesInput.style.display = 'none';
+                    }
+                }
+
+                // Event listener para el cambio en el estado del checkbox
+                document.getElementById('modo_manual_checkbox').addEventListener('change', function() {
+                    toggleModoManual();
+                });
+
+                // Llamar a la función al cargar la página para asegurar la visibilidad inicial
+                toggleModoManual();
+            </script>
+
 
 
             <script>

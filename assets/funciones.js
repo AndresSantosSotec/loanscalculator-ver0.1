@@ -38,8 +38,4 @@ function mostrarTablaPagos() {
 
 
 // Event listener para el botón "Ver tabla de pagos"
-document.getElementById('ver-tabla-pagos').addEventListener('click', function() {
-    mostrarTablaPagos();
-});
-
 
