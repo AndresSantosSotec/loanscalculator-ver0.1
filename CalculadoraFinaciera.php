@@ -256,9 +256,23 @@ function mostrar_calculadora_financiera()
                 </div>
             </div>
 
+            
+
             <script src="assets/funciones.js"></script>
             <!-- Enlace al archivo JavaScript de Bootstrap (opcional, solo si necesitas funcionalidades JS de Bootstrap) -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+            <!--funcuoines de prueba-->
+            <script>
+                document.getElementById('ver-tabla-pagos').addEventListener('click', function() {
+                    document.getElementById('card-tabla-resumida').style.display = 'block';
+                });
+
+                document.getElementById('ver-tabla-completa').addEventListener('click', function() {
+                    document.getElementById('card-tabla-resumida').style.display = 'none';
+                    document.getElementById('card-tabla-completa').style.display = 'block';
+                });
+            </script>
 
             <script>
                 document.getElementById('ver-tabla-pagos').addEventListener('click', function() {
