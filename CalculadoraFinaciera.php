@@ -209,7 +209,6 @@ function mostrar_calculadora_financiera()
                         </div>
                         <button type="submit" class="btn btn-success crdbody">Enviar</button>
                     </form>
-
                 </div>
             </div>
             <!-- Contenedor de la tabla de pagos y botones -->
@@ -285,6 +284,13 @@ function mostrar_calculadora_financiera()
 
 
             <script>
+                var closeButton = document.getElementsByClassName("close")[0];
+
+                // Agrega un evento de clic al botón de cierre para cerrar el modal
+                closeButton.onclick = function() {
+                    var modal = document.getElementById("modal-form");
+                    modal.style.display = "none";
+                }
                 // Función para cambiar la visibilidad del control de rango y el campo de entrada de tipo número
                 function toggleModoManual() {
                     var modoManualCheckbox = document.getElementById('modo_manual_checkbox');
