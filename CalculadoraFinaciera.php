@@ -6,7 +6,6 @@ Version: 1.0
 Author: Prolink GT
 License: GPL v2 or later
 */
-
 // Función para mostrar el formulario de la calculadora financiera
 function mostrar_calculadora_financiera()
 {
@@ -20,7 +19,6 @@ function mostrar_calculadora_financiera()
     $cuota = 0;
     $error_message = '';
     $tabla_pagos = array(); // Inicializamos la variable $tabla_pagos como un array vacío
-
     // Verificar si se ha enviado el formulario
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Calcular los intereses según el tipo de crédito (Lo ideal es que se pueda parametrizar)
@@ -37,7 +35,6 @@ function mostrar_calculadora_financiera()
             default:
                 $interes = 0;
         }
-
         // Calcular la cuota según el tipo de cuota
         if ($tipo_cuota == 'nivelada') {
             $tasa_interes_decimal = $interes / 100 / 12;
@@ -129,12 +126,11 @@ function mostrar_calculadora_financiera()
 
                                 <!--modo Manual & modo Slicer-->
                                 <div class="mb-3">
-                                    <label for="plazo_meses" class="form-label">Plazo en meses:</label>
-                                    <input type="number" name="plazo_meses" id="plazo_meses_input" class="form-control" min="1" max="36" value="<?php echo $plazo_meses; ?>" required>
+                                    <input type="number" name="plazo_meses" id="plazo_meses_input" class="form-control" min="1" max="60" value="<?php echo $plazo_meses; ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="plazo_meses_range" id="plazo_meses_range_label" class="form-label">Plazo en meses: <?php echo $plazo_meses; ?></label>
-                                    <input type="range" name="plazo_meses_range" id="plazo_meses_range" class="form-range" min="1" max="36" value="<?php echo $plazo_meses; ?>">
+                                    <input type="range" name="plazo_meses_range" id="plazo_meses_range" class="form-range" min="1" max="60" value="<?php echo $plazo_meses; ?>">
                                 </div>
                                 <div class="mb-3 form-check">
                                     <input class="form-check-input" type="checkbox" id="modo_manual_checkbox">
@@ -145,8 +141,8 @@ function mostrar_calculadora_financiera()
                                 <div class="mb-3">
                                     <label for="tipo_credito" class="form-label">Tipo de crédito:</label>
                                     <select name="tipo_credito" class="form-select" required>
-                                        <option value="vehiculo" <?php if ($tipo_credito == 'vehiculo') echo 'selected'; ?>>Vehículo</option>
-                                        <option value="agricola" <?php if ($tipo_credito == 'agricola') echo 'selected'; ?>>Agrícola</option>
+                                        <option value="vehiculo" <?php if ($tipo_credito == 'vehiculo') echo 'selected'; ?>>Equipo de computo</option>
+                                        <option value="agricola" <?php if ($tipo_credito == 'agricola') echo 'selected'; ?>>Equipo de oficina</option>
                                         <option value="consumo" <?php if ($tipo_credito == 'consumo') echo 'selected'; ?>>Consumo</option>
                                     </select>
                                 </div>
@@ -255,9 +251,6 @@ function mostrar_calculadora_financiera()
                     </div>
                 </div>
             </div>
-
-            
-
             <script src="assets/funciones.js"></script>
             <!-- Enlace al archivo JavaScript de Bootstrap (opcional, solo si necesitas funcionalidades JS de Bootstrap) -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
