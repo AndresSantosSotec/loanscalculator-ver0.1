@@ -1,11 +1,5 @@
 <?php
-/*
-Plugin Name: Calculadora Financiera
-Description: Calculadora para generar tablas de amortización Cuota Nivelada y Cuota Sobre Saldos.
-Version: 1.0
-Author: Prolink GT
-License: GPL v2 or later
-*/
+
 // Función para mostrar el formulario de la calculadora financiera
 function mostrar_calculadora_financiera()
 {
@@ -141,7 +135,7 @@ function mostrar_calculadora_financiera()
                                 <div class="mb-3">
                                     <label for="tipo_credito" class="form-label">Tipo de crédito:</label>
                                     <select name="tipo_credito" class="form-select" required>
-                                        <option value="vehiculo" <?php if ($tipo_credito == 'vehiculo') echo 'selected'; ?>>Equipo de computo</option>
+                                        <option value="vehiculo" <?php if ($tipo_credito == 'vehiculo') echo 'selected'; ?>>vehiculo</option>
                                         <option value="agricola" <?php if ($tipo_credito == 'agricola') echo 'selected'; ?>>Equipo de oficina</option>
                                         <option value="consumo" <?php if ($tipo_credito == 'consumo') echo 'selected'; ?>>Consumo</option>
                                     </select>
@@ -155,6 +149,7 @@ function mostrar_calculadora_financiera()
                                 </div>
                                 <button type="submit" class="btn btn-primary">Calcular</button>
                                 <button type="button" class="btn btn-success" id="ver-tabla-pagos">Ver tabla de pagos</button>
+                                <button type="button" class="btn btn-info" id="ver-metricas" onclick="window.location.href='Metricas.php'">Metricas</button>
                             </form>
                         </div>
                         <div class="col-md-6">
@@ -186,7 +181,8 @@ function mostrar_calculadora_financiera()
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h2>Ingrese sus datos</h2>
-                    <form id="modal-form-data" action="plan_pago.php" method="POST" class="form-inline">
+                    <!-- Cambié el action para que apunte a 'guardar_datos.php' -->
+                    <form id="modal-form-data" action="guardar_datos.php" method="POST" class="form-inline">
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
                             <input type="text" id="nombre" name="nombre" class="form-control mr-2" required>
@@ -287,8 +283,6 @@ function mostrar_calculadora_financiera()
                     plazoMesesRangeLabel.textContent = 'Plazo en meses: ' + this.value;
                 });
             </script>
-
-
 
             <script>
                 var closeButton = document.getElementsByClassName("close")[0];
@@ -409,6 +403,5 @@ function mostrar_calculadora_financiera()
 <?php
 }
 mostrar_calculadora_financiera();
-// Agregar la función como shortcode para que se pueda usar en las páginas
-//add_shortcode('calculadora_financiera', 'mostrar_calculadora_financiera'); Codigo para embeberlo en Wordpress.
+
 ?>
