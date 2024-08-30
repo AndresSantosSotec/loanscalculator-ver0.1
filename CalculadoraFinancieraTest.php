@@ -1,4 +1,5 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
 
 class CalculadoraFinancieraTest extends TestCase
@@ -8,13 +9,13 @@ class CalculadoraFinancieraTest extends TestCase
         // Simula la lógica del cálculo
         $monto_prestamo = 10000;
         $plazo_meses = 12;
-        $tipo_cuota = 'nivelada';
         $interes = 5;
+        $tipo_cuota = 'nivelada';
 
         $tasa_interes_decimal = $interes / 100 / 12;
         $cuota = ($monto_prestamo * $tasa_interes_decimal) / (1 - pow(1 + $tasa_interes_decimal, -$plazo_meses));
 
-        // Asegúrate de que el cálculo sea el esperado
+        // Verifica el resultado esperado
         $this->assertEquals(856.07, round($cuota, 2));
     }
 
@@ -23,7 +24,6 @@ class CalculadoraFinancieraTest extends TestCase
         // Simula la lógica del cálculo
         $monto_prestamo = 10000;
         $plazo_meses = 12;
-        $tipo_cuota = 'saldos';
         $interes = 5;
 
         $tasa_interes_decimal = $interes / 100 / 12;
@@ -33,15 +33,15 @@ class CalculadoraFinancieraTest extends TestCase
         $intereses_primera_cuota = $monto_prestamo * $tasa_interes_decimal;
         $primera_cuota = $cuota + $intereses_primera_cuota;
 
-        // Asegúrate de que el cálculo sea el esperado
+        // Verifica el resultado esperado
         $this->assertEquals(856.07, round($primera_cuota, 2));
 
-        // Calcular la última cuota esperada (ejemplo de verificación)
+        // Verifica el resultado de la última cuota (ejemplo de verificación)
         $saldo_restante = $monto_prestamo - ($cuota * $plazo_meses);
         $intereses_ultima_cuota = $saldo_restante * $tasa_interes_decimal;
         $ultima_cuota = $cuota + $intereses_ultima_cuota;
 
-        // Asegúrate de que la última cuota también sea la esperada (ejemplo)
+        // Verifica que la última cuota sea la esperada (ejemplo)
         $this->assertEquals(856.07, round($ultima_cuota, 2));
     }
     
@@ -50,7 +50,6 @@ class CalculadoraFinancieraTest extends TestCase
         // Verifica que el sistema maneje correctamente un plazo de 0 meses
         $monto_prestamo = 10000;
         $plazo_meses = 0;
-        $tipo_cuota = 'nivelada';
         $interes = 5;
 
         // Esperamos que la cuota sea cero o que el sistema arroje un error
