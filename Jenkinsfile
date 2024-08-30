@@ -16,7 +16,7 @@ stage('Build') {
 stage('Dependency Track Analysis') {
     steps {
         sh """
-        curl -X POST 'http://localhost:8081/api/v1/scan' \ 
+        curl -X POST 'http://192.168.1.65:8081/api/v1/scan' \ 
         -H 'X-API-Key: your-dependency-track-api-key' \
         -F 'project=project-uuid' \
         -F 'file=@path/to/your/project.zip'
