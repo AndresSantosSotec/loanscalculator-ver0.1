@@ -31,10 +31,5 @@ pipeline {
         success {
             echo "Compilación y pruebas completadas con éxito."
         }
-        failure {
-            mail to: 'andressantostkd@gmail.com',
-                 subject: "Build/Tests Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                 body: "Verifica los detalles en Jenkins: ${env.BUILD_URL}"
-        }
     }
 }
