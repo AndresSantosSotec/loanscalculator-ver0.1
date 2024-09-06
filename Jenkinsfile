@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEP_TRACK_URL = 'http://192.168.1.65:8082/api/v1'  // Cambia a la URL de tu API Dependency Track.
+        DEP_TRACK_URL = 'http://192.168.1.65:8081/api/v1'  // Cambia a la URL de tu API Dependency Track.
         PROJECT_ID = 'febdf5a7-a141-486f-ad3c-30ae459c0b81'  // El ID del proyecto en Dependency Track.
     }
 
