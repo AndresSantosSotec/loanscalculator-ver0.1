@@ -1,48 +1,44 @@
 pipeline {
     agent any
     environment {
-        PROJECT_REPO = 'https://github.com/usuario/repo-proyecto.git'
+        PROJECT_REPO = 'https://github.com/AndresSantosSotec/loanscalculator-ver0.1.git'
+        GIT_CREDENTIALS = 'your-git-credentials-id'  // Asegúrate de que tus credenciales estén configuradas en Jenkins
     }
     stages {
         stage('Checkout') {
             steps {
-                // Clonar el repositorio
-                git PROJECT_REPO
+                // Clonar el repositorio utilizando credenciales si es necesario
+                git credentialsId: GIT_CREDENTIALS, url: PROJECT_REPO, branch: 'main'
             }
         }
-        stage('Generate Vulnerability Report') {
+        stage('Build') {
             steps {
-                // Crear informe en formato Markdown o JSON
-                writeFile file: 'vulnerability-report.md', text: '''
-                # Informe de Vulnerabilidades
-
-                **Fecha:** ${new Date()}
-                
-                ## Vulnerabilidades Detectadas:
-                Revisa el archivo sbom.json para más detalles.
-                '''
+                // Instalar dependencias del proyecto (ajusta según el lenguaje)
+                sh 'composer install'
             }
         }
-        stage('Convert Report to PDF with Pandoc') {
+        stage('Unit Tests') {
             steps {
-                // Convertir el archivo Markdown a PDF usando Pandoc
-                sh 'pandoc vulnerability-report.md -o informe_vulnerabilidades.pdf'
+                // Ejecutar las pruebas unitarias
+                sh './vendor/bin/phpunit CalculadoraFinancieraTest.php'
             }
         }
     }
     post {
         always {
-            archiveArtifacts artifacts: 'informe_vulnerabilidades.pdf', allowEmptyArchive: false
+            junit 'tests/report.xml' // Publicar los resultados de las pruebas unitarias
+            archiveArtifacts artifacts: '**/build/libs/*.jar', allowEmptyArchive: true
         }
         success {
-            mail to: 'andressantostkd@gmail.com',
-                 subject: "Vulnerability Report Generated: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                 body: "El informe está disponible en Jenkins: ${env.BUILD_URL}"
+            echo "Compilación y pruebas completadas con éxito."
         }
         failure {
             mail to: 'andressantostkd@gmail.com',
-                 subject: "Report Generation Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                 body: "Hubo un problema al generar el informe. Verifica los detalles en Jenkins: ${env.BUILD_URL}"
+                 subject: "Build/Tests Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                 body: "Verifica los detalles en Jenkins: ${env.BUILD_URL}",
+                 smtpHost: 'smtp.yourdomain.com',  // Asegúrate de configurar un servidor SMTP válido
+                 from: 'jenkins@yourdomain.com',
+                 replyTo: 'noreply@yourdomain.com'
         }
     }
 }
