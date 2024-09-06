@@ -7,14 +7,23 @@ namespace Composer\Autoload;
 class ComposerStaticInitfbee484fbcb98ba45566f17e8eb69e9b
 {
     public static $files = array (
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Swaggest\\JsonSchema\\' => 20,
+            'Swaggest\\JsonDiff\\' => 18,
+        ),
         'P' => 
         array (
             'PhpParser\\' => 10,
+            'PhpLang\\' => 8,
+            'PackageUrl\\' => 11,
         ),
         'F' => 
         array (
@@ -25,6 +34,11 @@ class ComposerStaticInitfbee484fbcb98ba45566f17e8eb69e9b
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
+        'C' => 
+        array (
+            'CycloneDX\\Core\\' => 15,
+            'CycloneDX\\Composer\\' => 19,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -32,9 +46,29 @@ class ComposerStaticInitfbee484fbcb98ba45566f17e8eb69e9b
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Swaggest\\JsonSchema\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/swaggest/json-schema/src',
+        ),
+        'Swaggest\\JsonDiff\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/swaggest/json-diff/src',
+        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'PhpLang\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phplang/scope-exit/src',
+        ),
+        'PackageUrl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/package-url/packageurl-php/src',
         ),
         'Fpdf\\' => 
         array (
@@ -47,6 +81,14 @@ class ComposerStaticInitfbee484fbcb98ba45566f17e8eb69e9b
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'CycloneDX\\Core\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cyclonedx/cyclonedx-library/src/Core',
+        ),
+        'CycloneDX\\Composer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cyclonedx/cyclonedx-php-composer/src',
         ),
         'App\\' => 
         array (

@@ -6,9 +6,16 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'Swaggest\\JsonSchema\\' => array($vendorDir . '/swaggest/json-schema/src'),
+    'Swaggest\\JsonDiff\\' => array($vendorDir . '/swaggest/json-diff/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
+    'PhpLang\\' => array($vendorDir . '/phplang/scope-exit/src'),
+    'PackageUrl\\' => array($vendorDir . '/package-url/packageurl-php/src'),
     'Fpdf\\' => array($vendorDir . '/fpdf/fpdf/src/Fpdf'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+    'CycloneDX\\Core\\' => array($vendorDir . '/cyclonedx/cyclonedx-library/src/Core'),
+    'CycloneDX\\Composer\\' => array($vendorDir . '/cyclonedx/cyclonedx-php-composer/src'),
     'App\\' => array($baseDir . '/src'),
 );
