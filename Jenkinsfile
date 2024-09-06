@@ -31,7 +31,7 @@ pipeline {
                 script {
                     def bomFile = 'bom.xml'
                     sh """
-                    curl -X POST "${DEP_TRACK_URL}/bom" \
+                    curl -X PUT "${DEP_TRACK_URL}/bom" \
                         -F "project=${PROJECT_ID}" \
                         -F "bom=@${bomFile}"
                     """
