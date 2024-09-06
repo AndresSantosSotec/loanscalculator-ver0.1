@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    environment {
+        PROJECT_REPO = 'https://github.com/usuario/repo-proyecto.git'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clonar el repositorio
+                git PROJECT_REPO
+            }
+        }
+        stage('Build') {
+            steps {
+                // Instalar dependencias del proyecto (ajusta según el lenguaje)
+                sh 'composer install'
+            }
+        }
+        stage('Unit Tests') {
+            steps {
+                // Ejecutar las pruebas unitarias
+                sh './vendor/bin/phpunit CalculadoraFinancieraTest.php'
+            }
+        }
+    }
+    post {
+        always {
+            junit 'tests/report.xml' // Publicar los resultados de las pruebas unitarias
+            archiveArtifacts artifacts: '**/build/libs/*.jar', allowEmptyArchive: true
+        }
+        success {
+            echo "Compilación y pruebas completadas con éxito."
+        }
+        failure {
+            mail to: 'andressantostkd@gmail.com',
+                 subject: "Build/Tests Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                 body: "Verifica los detalles en Jenkins: ${env.BUILD_URL}"
+        }
+    }
+}

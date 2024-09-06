@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    environment {
+        PROJECT_REPO = 'https://github.com/usuario/repo-proyecto.git'
+        DEP_TRACK_API = 'http://localhost:8081/api'
+        PROJECT_ID = 'your_project_id'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clonar el repositorio
+                git PROJECT_REPO
+            }
+        }
+        stage('Generate SBOM') {
+            steps {
+                // Generar archivo de materiales (SBOM) para análisis
+                sh 'composer audit --format=json > sbom.json'
+            }
+        }
+        stage('Analyze with Dependency Track') {
+            steps {
+                // Ejecutar análisis de vulnerabilidades con Dependency Track CLI
+                sh """
+                curl -X POST -H 'Content-Type: application/json' --data-binary @sbom.json \
+                ${DEP_TRACK_API}/v1/bom --header 'X-API-Key: your_api_key'
+                """
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'sbom.json', allowEmptyArchive: false
+        }
+        success {
+            echo "Análisis de vulnerabilidades completado exitosamente."
+        }
+        failure {
+            mail to: 'andressantostkd@gmail.com',
+                 subject: "Vulnerabilities Found: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                 body: "Consulta los detalles en Jenkins: ${env.BUILD_URL}"
+        }
+    }
+}

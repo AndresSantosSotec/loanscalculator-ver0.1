@@ -4,14 +4,12 @@ stage('Cloning Repository') {
         git 'https://github.com/AndresSantosSotec/loanscalculator-ver0.1.git'
     }
 }
-
 //Copilacion del codigo
 stage('Build') {
     steps {
         sh 'php -l src/*.php'
     }
 }
-
 //Analisis de vulnerabilidades con dependecy track
 stage('Dependency Track Analysis') {
     steps {
@@ -25,14 +23,12 @@ stage('Dependency Track Analysis') {
 
     //ahi donde dice localhost debe ir la ip de la maquina virtual, es decir la direccion en la que podemos entrar a dependecy track.
 }
-
 //Informe de la tarea en pandoc
 stage('Generate Report') {
     steps {
         sh 'pandoc results.json -o report.pdf'
     }
 }
-
 //almacenamiento del informe
 stage('Archive Report') {
     steps {

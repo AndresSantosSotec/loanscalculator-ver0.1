@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    environment {
+        PROJECT_REPO = 'https://github.com/usuario/repo-proyecto.git'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clonar el repositorio
+                git PROJECT_REPO
+            }
+        }
+        stage('Generate Vulnerability Report') {
+            steps {
+                // Crear informe en formato Markdown o JSON
+                writeFile file: 'vulnerability-report.md', text: '''
+                # Informe de Vulnerabilidades
+
+                **Fecha:** ${new Date()}
+                
+                ## Vulnerabilidades Detectadas:
+                Revisa el archivo sbom.json para más detalles.
+                '''
+            }
+        }
+        stage('Convert Report to PDF with Pandoc') {
+            steps {
+                // Convertir el archivo Markdown a PDF usando Pandoc
+                sh 'pandoc vulnerability-report.md -o informe_vulnerabilidades.pdf'
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'informe_vulnerabilidades.pdf', allowEmptyArchive: false
+        }
+        success {
+            mail to: 'andressantostkd@gmail.com',
+                 subject: "Vulnerability Report Generated: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                 body: "El informe está disponible en Jenkins: ${env.BUILD_URL}"
+        }
+        failure {
+            mail to: 'andressantostkd@gmail.com',
+                 subject: "Report Generation Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                 body: "Hubo un problema al generar el informe. Verifica los detalles en Jenkins: ${env.BUILD_URL}"
+        }
+    }
+}
